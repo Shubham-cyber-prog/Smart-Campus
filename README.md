@@ -1,6 +1,17 @@
 # Smart Campus Admin
+**Smart-Campus** is a production-ready campus management system designed to make campus life smarter, faster, and more efficient.  
+Built using **React, TypeScript, Vite, Supabase**, and modern web technologies.
 
-A comprehensive campus management system built with React, TypeScript, Supabase, and Tailwind CSS.
+
+---
+
+## 🖥️ Demo
+
+> Add your deployed Netlify / Vercel URL here once live.  
+Example:  
+[https://smart-campus.netlify.app](https://smart-campus.netlify.app)
+
+---
 
 ## Features
 
