@@ -9,7 +9,7 @@ Built using **React, TypeScript, Vite, Supabase**, and modern web technologies.
 
 > Add your deployed Netlify / Vercel URL here once live.  
 Example:  
-[https://smart-campus.netlify.app](https://smart-campus.netlify.app)
+[https://smart-campus.netlify.app](https://campusplus1.netlify.app/)
 
 ---
 
