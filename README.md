@@ -122,30 +122,369 @@ The application uses the following main tables:
 8. **Analytics**: View reports and insights
 
 ## Project Structure
-
 ```
-src/
-├── components/        # Reusable components
-│   ├── layout/       # Layout components (Sidebar, Layout)
-│   └── ProtectedRoute.tsx
-├── contexts/         # React contexts
-│   └── AuthContext.tsx
-├── lib/             # Utilities and configurations
-│   └── supabase.ts
-├── pages/           # Application pages
-│   ├── Login.tsx
-│   ├── Register.tsx
-│   ├── Dashboard.tsx
-│   ├── Users.tsx
-│   ├── Campus.tsx
-│   ├── Emergency.tsx
-│   ├── Communication.tsx
-│   ├── Analytics.tsx
-│   └── Settings.tsx
-├── App.tsx          # Main application component
-└── main.tsx         # Application entry point
+SMART-CAMPUS-ADMIN/
+│
+├── 📁 client/                           # React Frontend Application
+│   ├── 📁 public/                       # Static Assets
+│   │   ├── index.html
+│   │   ├── manifest.json
+│   │   ├── robots.txt
+│   │   ├── service-worker.js            # PWA Service Worker
+│   │   ├── 📁 icons/                    # App Icons
+│   │   └── 📁 images/                   # Static Images
+│   │
+│   ├── 📁 src/                          # Source Code
+│   │   ├── 📁 assets/                   # Assets
+│   │   │   ├── 📁 fonts/                # Custom Fonts
+│   │   │   ├── 📁 styles/               # Global Styles
+│   │   │   │   ├── global.css
+│   │   │   │   ├── variables.css
+│   │   │   │   └── animations.css
+│   │   │   └── 📁 svgs/                 # SVG Components
+│   │   │
+│   │   ├── 📁 components/               # Reusable Components
+│   │   │   ├── 📁 common/               # Common Components
+│   │   │   │   ├── Button/
+│   │   │   │   ├── Input/
+│   │   │   │   ├── Modal/
+│   │   │   │   ├── Table/
+│   │   │   │   ├── Card/
+│   │   │   │   ├── Loader/
+│   │   │   │   ├── Toast/
+│   │   │   │   └── Tooltip/
+│   │   │   │
+│   │   │   ├── 📁 layout/               # Layout Components
+│   │   │   │   ├── Sidebar/
+│   │   │   │   ├── Navbar/
+│   │   │   │   ├── Header/
+│   │   │   │   ├── Footer/
+│   │   │   │   └── Breadcrumb/
+│   │   │   │
+│   │   │   ├── 📁 forms/                # Form Components
+│   │   │   │   ├── FormBuilder/
+│   │   │   │   ├── FileUpload/
+│   │   │   │   ├── RichTextEditor/
+│   │   │   │   └── DateRangePicker/
+│   │   │   │
+│   │   │   ├── 📁 maps/                 # Map Components
+│   │   │   │   ├── CampusMap/
+│   │   │   │   ├── BuildingEditor/
+│   │   │   │   ├── FloorPlan/
+│   │   │   │   └── LocationPicker/
+│   │   │   │
+│   │   │   ├── 📁 charts/               # Chart Components
+│   │   │   │   ├── ActivityChart/
+│   │   │   │   ├── UtilizationChart/
+│   │   │   │   └── CustomChart/
+│   │   │   │
+│   │   │   └── 📁 widgets/              # Dashboard Widgets
+│   │   │       ├── StatsCard/
+│   │   │       ├── ActivityFeed/
+│   │   │       └── QuickActions/
+│   │   │
+│   │   ├── 📁 pages/                    # Application Pages
+│   │   │   ├── 📁 Auth/                 # Authentication Pages
+│   │   │   │   ├── Login/
+│   │   │   │   ├── Register/
+│   │   │   │   ├── ForgotPassword/
+│   │   │   │   └── ResetPassword/
+│   │   │   │
+│   │   │   ├── 📁 Dashboard/            # Dashboard Pages
+│   │   │   │   ├── Overview/
+│   │   │   │   ├── Analytics/
+│   │   │   │   └── CustomDashboard/
+│   │   │   │
+│   │   │   ├── 📁 Users/                # User Management
+│   │   │   │   ├── UserList/
+│   │   │   │   ├── UserCreate/
+│   │   │   │   ├── UserEdit/
+│   │   │   │   ├── UserProfile/
+│   │   │   │   └── RolesPermissions/
+│   │   │   │
+│   │   │   ├── 📁 Campus/               # Campus Management
+│   │   │   │   ├── Buildings/
+│   │   │   │   ├── Facilities/
+│   │   │   │   ├── Rooms/
+│   │   │   │   ├── Assets/
+│   │   │   │   └── Maps/
+│   │   │   │
+│   │   │   ├── 📁 Emergency/            # Emergency Management
+│   │   │   │   ├── LiveAlerts/
+│   │   │   │   ├── ResponseTeam/
+│   │   │   │   ├── IncidentReports/
+│   │   │   │   ├── EmergencyPlans/
+│   │   │   │   └── Drills/
+│   │   │   │
+│   │   │   ├── 📁 Communication/        # Communication
+│   │   │   │   ├── Notifications/
+│   │   │   │   ├── Broadcasts/
+│   │   │   │   ├── Announcements/
+│   │   │   │   └── Templates/
+│   │   │   │
+│   │   │   ├── 📁 Analytics/            # Analytics & Reports
+│   │   │   │   ├── Reports/
+│   │   │   │   ├── Insights/
+│   │   │   │   ├── Export/
+│   │   │   │   └── CustomReports/
+│   │   │   │
+│   │   │   ├── 📁 Settings/             # System Settings
+│   │   │   │   ├── General/
+│   │   │   │   ├── Security/
+│   │   │   │   ├── Integration/
+│   │   │   │   └── Backup/
+│   │   │   │
+│   │   │   └── 📁 Admin/                # Admin Pages
+│   │   │       ├── AuditLogs/
+│   │   │       ├── SystemHealth/
+│   │   │       └── APIKeys/
+│   │   │
+│   │   ├── 📁 hooks/                    # Custom React Hooks
+│   │   │   ├── useAuth.js
+│   │   │   ├── useWebSocket.js
+│   │   │   ├── useNotifications.js
+│   │   │   ├── useMap.js
+│   │   │   ├── useForm.js
+│   │   │   └── useLocalStorage.js
+│   │   │
+│   │   ├── 📁 store/                    # State Management
+│   │   │   ├── 📁 slices/               # Redux Slices
+│   │   │   │   ├── authSlice.js
+│   │   │   │   ├── userSlice.js
+│   │   │   │   ├── campusSlice.js
+│   │   │   │   ├── emergencySlice.js
+│   │   │   │   └── notificationSlice.js
+│   │   │   ├── 📁 services/             # RTK Query Services
+│   │   │   │   ├── authApi.js
+│   │   │   │   ├── userApi.js
+│   │   │   │   └── campusApi.js
+│   │   │   └── store.js
+│   │   │
+│   │   ├── 📁 services/                 # API Services
+│   │   │   ├── apiClient.js
+│   │   │   ├── authService.js
+│   │   │   ├── userService.js
+│   │   │   ├── campusService.js
+│   │   │   └── emergencyService.js
+│   │   │
+│   │   ├── 📁 utils/                    # Utility Functions
+│   │   │   ├── validators.js
+│   │   │   ├── formatters.js
+│   │   │   ├── helpers.js
+│   │   │   ├── constants.js
+│   │   │   ├── enums.js
+│   │   │   └── errorHandler.js
+│   │   │
+│   │   ├── 📁 contexts/                 # React Contexts
+│   │   │   ├── AuthContext.jsx
+│   │   │   ├── ThemeContext.jsx
+│   │   │   └── NotificationContext.jsx
+│   │   │
+│   │   ├── 📁 types/                    # TypeScript Types
+│   │   │   ├── user.types.ts
+│   │   │   ├── campus.types.ts
+│   │   │   ├── emergency.types.ts
+│   │   │   └── api.types.ts
+│   │   │
+│   │   ├── 📁 config/                   # Configuration
+│   │   │   ├── routes.js
+│   │   │   ├── theme.js
+│   │   │   └── settings.js
+│   │   │
+│   │   ├── App.jsx
+│   │   ├── App.css
+│   │   ├── main.jsx
+│   │   └── index.css
+│   │
+│   ├── package.json
+│   ├── tailwind.config.js
+│   ├── postcss.config.js
+│   ├── vite.config.js                    # Vite Configuration
+│   └── .env.example
+│
+├── 📁 server/                           # Node.js Backend
+│   ├── 📁 src/                          # Source Code
+│   │   ├── 📁 config/                   # Configuration
+│   │   │   ├── database.js
+│   │   │   ├── redis.js
+│   │   │   ├── passport.js
+│   │   │   ├── constants.js
+│   │   │   ├── environment.js
+│   │   │   └── swagger.js
+│   │   │
+│   │   ├── 📁 models/                   # Database Models
+│   │   │   ├── User/
+│   │   │   │   ├── User.js
+│   │   │   │   ├── Admin.js
+│   │   │   │   ├── Student.js
+│   │   │   │   └── Staff.js
+│   │   │   ├── Campus/
+│   │   │   │   ├── Building.js
+│   │   │   │   ├── Facility.js
+│   │   │   │   ├── Room.js
+│   │   │   │   └── Asset.js
+│   │   │   ├── Emergency/
+│   │   │   │   ├── Emergency.js
+│   │   │   │   ├── Incident.js
+│   │   │   │   └── ResponseTeam.js
+│   │   │   ├── Communication/
+│   │   │   │   ├── Notification.js
+│   │   │   │   ├── Broadcast.js
+│   │   │   │   └── Template.js
+│   │   │   ├── Analytics/
+│   │   │   │   ├── Report.js
+│   │   │   │   ├── Log.js
+│   │   │   │   └── Metric.js
+│   │   │   └── System/
+│   │   │       ├── AuditLog.js
+│   │   │       ├── Settings.js
+│   │   │       └── Backup.js
+│   │   │
+│   │   ├── 📁 controllers/              # Route Controllers
+│   │   │   ├── authController.js
+│   │   │   ├── userController.js
+│   │   │   ├── campusController.js
+│   │   │   ├── emergencyController.js
+│   │   │   ├── notificationController.js
+│   │   │   ├── analyticsController.js
+│   │   │   └── systemController.js
+│   │   │
+│   │   ├── 📁 routes/                   # API Routes
+│   │   │   ├── 📁 v1/                   # API Version 1
+│   │   │   │   ├── authRoutes.js
+│   │   │   │   ├── userRoutes.js
+│   │   │   │   ├── campusRoutes.js
+│   │   │   │   ├── emergencyRoutes.js
+│   │   │   │   └── analyticsRoutes.js
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 middleware/               # Middleware
+│   │   │   ├── auth.js
+│   │   │   ├── roleCheck.js
+│   │   │   ├── validation.js
+│   │   │   ├── errorHandler.js
+│   │   │   ├── logger.js
+│   │   │   ├── rateLimiter.js
+│   │   │   └── upload.js
+│   │   │
+│   │   ├── 📁 services/                 # Business Logic
+│   │   │   ├── authService.js
+│   │   │   ├── userService.js
+│   │   │   ├── campusService.js
+│   │   │   ├── emergencyService.js
+│   │   │   ├── notificationService.js
+│   │   │   ├── analyticsService.js
+│   │   │   └── aiService.js
+│   │   │
+│   │   ├── 📁 utils/                    # Utilities
+│   │   │   ├── jwt.js
+│   │   │   ├── bcrypt.js
+│   │   │   ├── validators.js
+│   │   │   ├── emailTemplates.js
+│   │   │   ├── pushNotification.js
+│   │   │   ├── fileUpload.js
+│   │   │   └── reportGenerator.js
+│   │   │
+│   │   ├── 📁 sockets/                  # WebSocket Handlers
+│   │   │   ├── emergencySocket.js
+│   │   │   ├── notificationSocket.js
+│   │   │   ├── campusSocket.js
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 jobs/                     # Cron Jobs
+│   │   │   ├── backupJob.js
+│   │   │   ├── cleanupJob.js
+│   │   │   ├── notificationJob.js
+│   │   │   └── reportJob.js
+│   │   │
+│   │   ├── 📁 scripts/                  # Utility Scripts
+│   │   │   ├── seedDatabase.js
+│   │   │   ├── backupDatabase.js
+│   │   │   └── migrateData.js
+│   │   │
+│   │   ├── 📁 docs/                     # API Documentation
+│   │   │   ├── swagger.json
+│   │   │   └── api.yaml
+│   │   │
+│   │   ├── app.js
+│   │   ├── server.js
+│   │   └── index.js
+│   │
+│   ├── package.json
+│   ├── .env.example
+│   ├── .eslintrc.js
+│   ├── .prettierrc
+│   └── Dockerfile
+│
+├── 📁 mobile/                          # React Native Admin App
+│   ├── 📁 src/
+│   │   ├── 📁 screens/
+│   │   ├── 📁 components/
+│   │   ├── 📁 navigation/
+│   │   └── 📁 utils/
+│   ├── package.json
+│   └── app.json
+│
+├── 📁 docker/                          # Docker Configuration
+│   ├── Dockerfile.client
+│   ├── Dockerfile.server
+│   ├── Dockerfile.nginx
+│   ├── docker-compose.dev.yml
+│   ├── docker-compose.prod.yml
+│   └── nginx.conf
+│
+├── 📁 docs/                           # Documentation
+│   ├── 📁 api/                        # API Documentation
+│   │   ├── overview.md
+│   │   ├── endpoints.md
+│   │   └── examples.md
+│   ├── 📁 deployment/                 # Deployment Guides
+│   │   ├── local.md
+│   │   ├── production.md
+│   │   └── aws.md
+│   ├── 📁 development/                # Development Guides
+│   │   ├── setup.md
+│   │   ├── coding-standards.md
+│   │   └── testing.md
+│   ├── 📁 user-guides/                # User Manuals
+│   │   ├── admin-guide.md
+│   │   ├── user-guide.md
+│   │   └── emergency-guide.md
+│   └── 📁 architecture/               # Architecture Docs
+│       ├── system-design.md
+│       ├── database-design.md
+│       └── security.md
+│
+├── 📁 tests/                          # Test Suites
+│   ├── 📁 unit/
+│   ├── 📁 integration/
+│   ├── 📁 e2e/
+│   ├── 📁 performance/
+│   └── jest.config.js
+│
+├── 📁 scripts/                        # Build & Utility Scripts
+│   ├── build.sh
+│   ├── deploy.sh
+│   ├── backup.sh
+│   └── seed.sh
+│
+├── .github/                           # GitHub Configuration
+│   ├── 📁 workflows/                  # GitHub Actions
+│   │   ├── ci.yml
+│   │   ├── cd.yml
+│   │   └── security.yml
+│   ├── dependabot.yml
+│   └── CODEOWNERS
+│
+├── .husky/                           # Git Hooks
+├── .vscode/                          # VS Code Settings
+├── .dockerignore
+├── .gitignore
+├── .env.example
+├── package.json                      # Root Package.json
+├── README.md
+└── LICENSE
 ```
-
 ## Contributing
 
 This is a production-ready campus management system. When contributing:
