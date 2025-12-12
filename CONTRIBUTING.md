@@ -72,8 +72,37 @@ Improve build size, caching, hosting configuration, etc.
 
 Follow these steps after cloning the repo:
 
-### 1️⃣ Clone the repository
+1️⃣ Clone the repository
 
 ```bash
 git clone https://github.com/Shubham-cyber-prog/Smart-Campus.git
 cd Smart-Campus
+```
+2️⃣ Install dependencies
+```
+npm install
+```
+
+3️⃣ Create environment file
+```
+cp .env.example .env
+```
+
+
+Add your Supabase values:
+```
+
+VITE_SUPABASE_URL=your-url
+VITE_SUPABASE_ANON_KEY=your-key
+```
+
+4️⃣ Start development server
+```
+npm run dev
+```
+
+5️⃣ Build for production
+```
+npm run build
+```
+
