@@ -8,7 +8,6 @@ Built using React, TypeScript, Vite, Supabase, and modern web technologies.
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 </div>
-e
 <div align="center"><div style="display: flex; justify-content: center; gap: 30px; margin: 40px 0;"> <div style="text-align: center;"> <img width="220" height="220" alt="Smart Campus Logo" src="https://github.com/user-attachments/assets/852c043e-216f-49c9-8057-99e5edd8283a" /> <p><b>Smart Campus</b></p> </div> <div style="text-align: center;"> <img width="220" height="220" alt="DevElevate Logo" src="https://github.com/user-attachments/assets/49cb72f9-ff2c-43ef-9c59-c3d55ba12a15" /> <p><b>Campus Ecosystem</b></p> </div> </div></div><div align="center" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; margin: 30px 0; color: white;">
 🚀 Join the Revolution in Campus Technology! 🚀
 
