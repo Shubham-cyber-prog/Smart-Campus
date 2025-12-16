@@ -8,6 +8,18 @@ We’re thrilled to have you here!
 Your contributions help make this project better and more impactful.
 
 ---
+## 📝 How to Contribute
+
+When contributing, please include:
+
+* **What change/feature you want to add** – Describe clearly what you plan to implement.  
+* **Why it’s needed** – Explain the problem it solves or improvement it brings.  
+* **Screenshots** – If the contribution is UI-related, attach before/after screenshots.  
+* **Estimated time (optional)** – How long you think this change might take.
+
+**Important:** Wait for a **project admin to assign** the issue to you before starting work.
+
+---
 
 # 📚 Table of Contents
 
@@ -105,4 +117,21 @@ npm run dev
 ```
 npm run build
 ```
+## 💬 Need Help?
 
+If you are confused or stuck at any step:
+
+* Open an **Issue** in the repository  
+* Tag mentors or maintainers in the comments  
+* Reach out to the maintainers directly  
+* Contact our community team
+
+---
+
+We’re here to help you grow! 🌱
+🎉 Welcome to the Smart-Campus Community!
+
+Thank you for contributing your time, skills, and creativity.  
+Together, let's build something amazing! 🚀
+
+---
