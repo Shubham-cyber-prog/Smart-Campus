@@ -123,6 +123,18 @@ The application uses the following main tables:
 - Secure password handling
 - Audit logging for all critical operations
 
+## .env
+```
+# Supabase configuration
+SUPABASE_URL=your_supabase_url_here
+SUPABASE_KEY=your_supabase_key_here
+
+# Optional: Add more environment variables as needed
+# EXAMPLE:
+# PORT=3000
+# NODE_ENV=development
+```
+
 ## Default Roles
 
 1. **Admin**: Full system access, user management, system settings
