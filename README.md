@@ -506,6 +506,30 @@ This is a production-ready campus management system. When contributing:
 4. Ensure RLS policies are properly configured
 5. Document any new features
 
-## License
+## Code of Conduct 🧾
 
-MIT License
+By contributing, you agree to:
+
+- Be respectful and supportive
+- Help beginners who ask questions
+- Keep discussions constructive
+- Follow open-source etiquette
+- Avoid spamming issues or PRs
+
+---
+
+## License 📄
+
+This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
+
+---
+
+## Contact / Support 📬
+
+- **Project Admins:** Subham Nayak / Mentors
+- **Issues:** Open an [Issue](https://github.com/Shubham-cyber-prog/Smart-Campus/issues) on GitHub
+- **Community:** Reach out via project communication channels
+
+---
+
+> Together, let's build something amazing! 🚀
