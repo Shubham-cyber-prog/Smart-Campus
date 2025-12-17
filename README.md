@@ -12,7 +12,6 @@ Built using React, TypeScript, Vite, Supabase, and modern web technologies.
 🚀 Join the Revolution in Campus Technology! 🚀
 
 </div>
----
 
 ## 🖥️ Demo
 
