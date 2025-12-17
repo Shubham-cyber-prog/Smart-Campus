@@ -1,6 +1,26 @@
-# Smart Campus Admin
+**🚀 Smart Campus Admin
+Smart-Campus is a production-ready campus management system designed to make campus life smarter, faster, and more efficient.
+Built using React, TypeScript, Vite, Supabase, and modern web technologies.
 
-A comprehensive campus management system built with React, TypeScript, Supabase, and Tailwind CSS.
+ <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+<div align="center">
+<h1 align="center">🏫 Smart Campus Admin</h1> <h3 align="center">Revolutionizing Campus Management with AI & Modern Technology</h3>
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+
+</div>
+<div align="center"><div style="display: flex; justify-content: center; gap: 30px; margin: 40px 0;"> <div style="text-align: center;"> <img width="220" height="220" alt="Smart Campus Logo" src="https://github.com/user-attachments/assets/852c043e-216f-49c9-8057-99e5edd8283a" /> <p><b>Smart Campus</b></p> </div> <div style="text-align: center;"> <img width="220" height="220" alt="DevElevate Logo" src="https://github.com/user-attachments/assets/49cb72f9-ff2c-43ef-9c59-c3d55ba12a15" /> <p><b>Campus Ecosystem</b></p> </div> </div></div><div align="center" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; margin: 30px 0; color: white;">
+🚀 Join the Revolution in Campus Technology! 🚀
+
+</div>
+---
+
+## 🖥️ Demo
+
+> Add your deployed Netlify / Vercel URL here once live.  
+Example:  
+[https://smart-campus.netlify.app](https://campusplus1.netlify.app/)
+
+---
 
 ## Features
 
@@ -102,6 +122,18 @@ The application uses the following main tables:
 - JWT-based authentication
 - Secure password handling
 - Audit logging for all critical operations
+
+## .env
+```
+# Supabase configuration
+SUPABASE_URL=your_supabase_url_here
+SUPABASE_KEY=your_supabase_key_here
+
+# Optional: Add more environment variables as needed
+# EXAMPLE:
+# PORT=3000
+# NODE_ENV=development
+```
 
 ## Default Roles
 
@@ -495,6 +527,30 @@ This is a production-ready campus management system. When contributing:
 4. Ensure RLS policies are properly configured
 5. Document any new features
 
-## License
+## Code of Conduct 🧾
 
-MIT License
+By contributing, you agree to:
+
+- Be respectful and supportive
+- Help beginners who ask questions
+- Keep discussions constructive
+- Follow open-source etiquette
+- Avoid spamming issues or PRs
+
+---
+
+## License 📄
+
+This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
+
+---
+
+## Contact / Support 📬
+
+- **Project Admins:** Subham Nayak / Mentors
+- **Issues:** Open an [Issue](https://github.com/Shubham-cyber-prog/Smart-Campus/issues) on GitHub
+- **Community:** Reach out via project communication channels
+
+---
+
+> Together, let's build something amazing! 🚀
