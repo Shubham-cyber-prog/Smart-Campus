@@ -1,0 +1,35 @@
+name: 🔧 Config / Setup
+description: Configuration, deployment, or environment issues
+title: '[CONFIG] '
+labels: ['config', 'deployment']
+body:
+  - type: textarea
+    id: issue
+    attributes:
+      label: Configuration problem
+      description: What isn't working?
+      placeholder: "Docker build fails on M1 Mac"
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment details
+      description: OS, Node version, Docker version, etc.
+      placeholder: |
+        - OS: macOS 14
+        - Node: 20.10
+        - Docker: 4.25
+    render: shell
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type
+      options:
+        - Docker
+        - Environment Variables
+        - Dependencies
+        - Build Scripts
+        - Deployment (Vercel/Netlify)
