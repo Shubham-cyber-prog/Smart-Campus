@@ -1,0 +1,51 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Greeting
+        run: echo "👋 Hello, CI is running!"
+
+      - name: Check Workflows Directory
+        run: |
+          if [ -d ".github/workflows" ]; then
+            echo "🔍 .github/workflows directory exists:"
+            ls -la .github/workflows/
+          else
+            echo "⚠️ .github/workflows directory not found"
+          fi
+
+      - name: Validate YAML Syntax
+        run: |
+          echo "✅ Validating workflow YAML files..."
+          pip install pyyaml
+          if [ -d ".github/workflows" ]; then
+            for file in .github/workflows/*.yml; do
+              echo "Checking $file..."
+              python3 -c "import yaml; yaml.safe_load(open('$file'))"
+              echo "✅ $file is valid"
+            done
+          else
+            echo "⚠️ No workflow YAML files to validate"
+          fi
+
+      - name: List All Workflows
+        run: |
+          echo "📋 All available workflows:"
+          find .github/workflows/ -name "*.yml" -exec basename {} \; || echo "⚠️ No workflow files found"
+
+      - name: Future CI Placeholder
+        run: |
+          echo "🚀 Placeholder for future CI tasks: testing, linting, building, deploying..."
