@@ -1,0 +1,69 @@
+name: Test Workflows Setup
+
+on:
+  workflow_dispatch:  # Manual trigger
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/**"
+
+jobs:
+  test-setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Check Workflow Files
+        run: |
+          echo "🔍 Checking workflow files..."
+          ls -la .github/workflows/
+
+      - name: Validate YAML Syntax
+        run: |
+          echo "✅ Validating YAML syntax..."
+          pip install pyyaml
+          for file in .github/workflows/*.yml; do
+            echo "Checking $file..."
+            python3 -c "import yaml; yaml.safe_load(open('$file'))"
+            echo "✅ $file is valid"
+          done
+
+      - name: Test GitHub Script
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }} # future API calls ke liye ready
+          script: |
+            console.log('🚀 GitHub Script is working for DevElevate!');
+            console.log('Repository:', context.repo.owner + '/' + context.repo.repo);
+            console.log('Event:', context.eventName);
+
+      - name: Optional API Call Example
+        if: false # abhi run nahi hoga, sirf reference ke liye
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // Example: create a test issue (disabled by default)
+            github.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: "Test Issue",
+              body: "This issue is created by workflow"
+            });
+
+      - name: Success Message
+        run: |
+          echo "🎉 All workflows are set up correctly for DevElevate!"
+          echo "📋 Available workflows in this project:"
+          echo "  - issue-comment.yml"
+          echo "  - pr-comment.yml"
+          echo "  - first-time-contributor.yml"
+          echo "  - status-updates.yml"
+          echo ""
+          echo "🚀 These workflows will now automatically:"
+          echo "  - Welcome new issue creators"
+          echo "  - Welcome new PR creators"
+          echo "  - Recognize first-time contributors"
+          echo "  - Provide status updates and reminders"
+          echo "  - Create weekly project summaries"
