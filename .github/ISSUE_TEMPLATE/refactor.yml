@@ -1,0 +1,36 @@
+name: 🧩 Refactor
+description: Propose code cleanup or restructuring
+title: '[REFACTOR] '
+labels: ['refactor', 'tech-debt']
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Code problem
+      description: Why does this need refactoring?
+      placeholder: "Duplicate wallet validation logic in 5 files"
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Refactor plan
+      description: What changes? Include files affected.
+      placeholder: |
+        1. Extract walletValidator.js
+        2. Update 5 files to import
+        3. Add unit tests
+    validations:
+      required: true
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - label: Breaking change (requires version bump)
+          required: false
+        - label: Performance improvement
+          required: false
+        - label: Code readability
+          required: false
+

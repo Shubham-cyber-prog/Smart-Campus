@@ -1,0 +1,14 @@
+name: 📄 Blank Issue
+description: Use when other templates don't fit
+title: '[MISC] '
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for general discussions, questions, or issues that don't fit other categories.
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      placeholder: "Describe your issue or question here..."
