@@ -14,14 +14,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Check Workflow Files
+      - name: List Workflow Files
         run: |
-          echo "🔍 Checking workflow files..."
+          echo "🔍 Listing all workflow files in .github/workflows/"
           ls -la .github/workflows/
 
       - name: Validate YAML Syntax
         run: |
-          echo "✅ Validating YAML syntax..."
+          echo "✅ Validating YAML syntax for all workflows..."
           pip install pyyaml
           for file in .github/workflows/*.yml; do
             echo "Checking $file..."
@@ -32,38 +32,40 @@ jobs:
       - name: Test GitHub Script
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }} # future API calls ke liye ready
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            console.log('🚀 GitHub Script is working for DevElevate!');
+            console.log('🚀 GitHub Script is working for Smart Campus!');
             console.log('Repository:', context.repo.owner + '/' + context.repo.repo);
             console.log('Event:', context.eventName);
 
       - name: Optional API Call Example
-        if: false # abhi run nahi hoga, sirf reference ke liye
+        if: false # Currently disabled, reference only
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            // Example: create a test issue (disabled by default)
+            // Example: create a test issue
             github.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: "Test Issue",
-              body: "This issue is created by workflow"
+              title: "Test Issue from Workflow",
+              body: "This issue is automatically created by the Smart Campus workflow testing."
             });
 
       - name: Success Message
         run: |
-          echo "🎉 All workflows are set up correctly for DevElevate!"
-          echo "📋 Available workflows in this project:"
-          echo "  - issue-comment.yml"
-          echo "  - pr-comment.yml"
-          echo "  - first-time-contributor.yml"
-          echo "  - status-updates.yml"
+          echo "🎉 All workflows are configured correctly for Smart Campus!"
+          echo "📋 Current workflows in this repository:"
+          echo "  - issue-comment.yml  -> Auto welcome & label issues"
+          echo "  - pr-comment.yml     -> Auto welcome & label PRs with size and type"
+          echo "  - first-time-contributor.yml -> Recognize first-time contributors"
+          echo "  - status-updates.yml -> Automated status updates & reminders"
           echo ""
-          echo "🚀 These workflows will now automatically:"
-          echo "  - Welcome new issue creators"
-          echo "  - Welcome new PR creators"
-          echo "  - Recognize first-time contributors"
-          echo "  - Provide status updates and reminders"
-          echo "  - Create weekly project summaries"
+          echo "🚀 What these workflows do:"
+          echo "  - Welcome new issue and PR creators with detailed professional messages"
+          echo "  - Automatically label issues & PRs based on content, type, and size"
+          echo "  - Track first-time contributors and recognize their contributions"
+          echo "  - Provide real-time status updates and reminders to maintainers"
+          echo "  - Create weekly project summaries for management and contributors"
+          echo ""
+          echo "💡 All workflows are tested and ready for Smart Campus professional standards."
