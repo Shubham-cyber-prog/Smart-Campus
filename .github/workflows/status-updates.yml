@@ -1,30 +1,35 @@
-name: Status Updates and Reminders
+
+name: Status Updates, Reminders & Weekly Summary
 
 on:
   schedule:
-    # Run every day at 9 AM UTC
+    # Runs every day at 9:00 AM UTC
     - cron: "0 9 * * *"
   workflow_dispatch:
+
+permissions:
+  issues: write
+  pull-requests: write
 
 jobs:
   status-updates:
     runs-on: ubuntu-latest
-    permissions:
-      issues: write
-      pull-requests: write
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # -------------------- STALE ISSUES --------------------
       - name: Check Stale Issues
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const thirtyDaysAgo = new Date();
-            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+            const DAYS = 30;
+            const cutoff = new Date();
+            cutoff.setDate(cutoff.getDate() - DAYS);
 
-            const staleIssues = await github.rest.issues.listForRepo({
+            const issues = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'open',
@@ -33,53 +38,60 @@ jobs:
               per_page: 100
             });
 
-            for (const issue of staleIssues.data) {
+            for (const issue of issues.data) {
+              if (issue.pull_request) continue;
+
               const lastUpdated = new Date(issue.updated_at);
-              if (lastUpdated < thirtyDaysAgo && !issue.labels.some(label => label.name === 'stale')) {
-                const staleMessage = [
-                  `## ⏰ Issue Status Update`,
+              const isStale = lastUpdated < cutoff;
+              const alreadyStale = issue.labels.some(l => l.name === 'stale');
+
+              if (isStale && !alreadyStale) {
+                const days = Math.floor((Date.now() - lastUpdated) / (1000 * 60 * 60 * 24));
+
+                const message = [
+                  `## ⏰ Issue Status Reminder`,
                   ``,
-                  `This issue hasn't been updated in over 30 days.`,
+                  `This issue has been inactive for **${days} days**.`,
                   ``,
-                  `### 🔄 What You Can Do`,
-                  `- **Still relevant?** Please update this issue`,
-                  `- **Need help?** Join our [Discord](https://discord.gg/BtqrauPm)`,
-                  `- **Completed?** Close if resolved`,
-                  `- **No longer needed?** Close if irrelevant`,
+                  `### 🔄 Required Action`,
+                  `- Still valid? ➜ Please update with latest details`,
+                  `- Need help? ➜ Join our [Discord](https://discord.gg/BtqrauPm)`,
+                  `- Already resolved? ➜ Close this issue`,
                   ``,
-                  `### 📅 Timeline`,
-                  `- **Last Updated**: ${lastUpdated.toLocaleDateString()}`,
-                  `- **Days Since Update**: ${Math.floor((new Date() - lastUpdated) / (1000*60*60*24))}`,
+                  `### 📅 Last Activity`,
+                  `- **Last Updated:** ${lastUpdated.toDateString()}`,
                   ``,
-                  `---
-                  *Automated reminder.*`
+                  `---`,
+                  `*Automated reminder by Smart Campus workflow*`
                 ].join('\n');
-                
+
                 await github.rest.issues.createComment({
-                  issue_number: issue.number,
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  body: staleMessage
+                  issue_number: issue.number,
+                  body: message
                 });
-                
+
                 await github.rest.issues.addLabels({
-                  issue_number: issue.number,
                   owner: context.repo.owner,
                   repo: context.repo.repo,
+                  issue_number: issue.number,
                   labels: ['stale']
                 });
               }
             }
 
-      - name: Check Stale PRs
+      # -------------------- STALE PRs --------------------
+      - name: Check Stale Pull Requests
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const sevenDaysAgo = new Date();
-            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+            const DAYS = 7;
+            const cutoff = new Date();
+            cutoff.setDate(cutoff.getDate() - DAYS);
 
-            const stalePRs = await github.rest.pulls.list({
+            const prs = await github.rest.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'open',
@@ -88,109 +100,109 @@ jobs:
               per_page: 100
             });
 
-            for (const pr of stalePRs.data) {
+            for (const pr of prs.data) {
               const lastUpdated = new Date(pr.updated_at);
-              if (lastUpdated < sevenDaysAgo && !pr.labels.some(label => label.name === 'stale')) {
-                const staleMessage = [
-                  `## ⏰ PR Status Update`,
+              const isStale = lastUpdated < cutoff;
+              const alreadyStale = pr.labels.some(l => l.name === 'stale');
+
+              if (isStale && !alreadyStale) {
+                const days = Math.floor((Date.now() - lastUpdated) / (1000 * 60 * 60 * 24));
+
+                const message = [
+                  `## ⏰ Pull Request Reminder`,
                   ``,
-                  `This pull request hasn't been updated in over 7 days.`,
+                  `This PR has been inactive for **${days} days**.`,
                   ``,
-                  `### 🔄 What You Can Do`,
-                  `- **Ready for review?** Request review`,
-                  `- **Need changes?** Update PR`,
-                  `- **Need help?** Join [Discord](https://discord.gg/BtqrauPm)`,
-                  `- **No longer needed?** Close if irrelevant`,
+                  `### 🔄 Required Action`,
+                  `- Ready? ➜ Request review`,
+                  `- Changes needed? ➜ Push updates`,
+                  `- Need help? ➜ Join [Discord](https://discord.gg/BtqrauPm)`,
+                  `- Not needed? ➜ Close this PR`,
                   ``,
-                  `### 📅 Timeline`,
-                  `- **Last Updated**: ${lastUpdated.toLocaleDateString()}`,
-                  `- **Days Since Update**: ${Math.floor((new Date() - lastUpdated) / (1000*60*60*24))}`,
+                  `### 📅 Last Activity`,
+                  `- **Last Updated:** ${lastUpdated.toDateString()}`,
                   ``,
-                  `---
-                  *Automated reminder.*`
+                  `---`,
+                  `*Automated reminder by Smart Campus workflow*`
                 ].join('\n');
 
                 await github.rest.issues.createComment({
-                  issue_number: pr.number,
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  body: staleMessage
+                  issue_number: pr.number,
+                  body: message
                 });
-                
+
                 await github.rest.issues.addLabels({
-                  issue_number: pr.number,
                   owner: context.repo.owner,
                   repo: context.repo.repo,
+                  issue_number: pr.number,
                   labels: ['stale']
                 });
               }
             }
 
-      - name: Weekly Summary
+      # -------------------- WEEKLY SUMMARY --------------------
+      - name: Weekly Project Summary
         if: github.event_name == 'schedule'
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const today = new Date();
-            const weekStart = new Date(today);
+            const weekStart = new Date();
             weekStart.setDate(today.getDate() - 7);
 
-            const summaryTitle = `📊 Weekly Project Summary - ${today.toLocaleDateString()}`;
-
-            const recentIssues = await github.rest.issues.listForRepo({
+            const issues = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'all',
               since: weekStart.toISOString(),
-              per_page: 50
+              per_page: 100
             });
 
-            const recentPRs = await github.rest.pulls.list({
+            const prs = await github.rest.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'all',
-              per_page: 50
+              per_page: 100
             });
 
-            const newIssues = recentIssues.data.filter(i => new Date(i.created_at) >= weekStart && !i.pull_request);
-            const newPRs = recentPRs.data.filter(pr => new Date(pr.created_at) >= weekStart);
-            const mergedPRs = recentPRs.data.filter(pr => pr.merged_at && new Date(pr.merged_at) >= weekStart);
+            const newIssues = issues.data.filter(i => !i.pull_request && new Date(i.created_at) >= weekStart);
+            const newPRs = prs.data.filter(p => new Date(p.created_at) >= weekStart);
+            const mergedPRs = prs.data.filter(p => p.merged_at && new Date(p.merged_at) >= weekStart);
 
-            const summaryBody = [
+            const contributors = new Set([
+              ...newIssues.map(i => i.user.login),
+              ...newPRs.map(p => p.user.login)
+            ]);
+
+            const body = [
               `## 📊 Weekly Project Summary`,
               ``,
-              `**Period**: ${weekStart.toLocaleDateString()} - ${today.toLocaleDateString()}`,
+              `**Project:** Smart Campus`,
+              `**Duration:** ${weekStart.toDateString()} → ${today.toDateString()}`,
               ``,
               `### 📈 Activity Overview`,
-              `- 🆕 **New Issues**: ${newIssues.length}`,
-              `- 🚀 **New PRs**: ${newPRs.length}`,
-              `- ✅ **Merged PRs**: ${mergedPRs.length}`,
-              `- 👥 **Active Contributors**: ${new Set([...newIssues.map(i => i.user.login), ...newPRs.map(p => p.user.login)]).size}`,
+              `- 🆕 New Issues: **${newIssues.length}**`,
+              `- 🚀 New PRs: **${newPRs.length}**`,
+              `- ✅ Merged PRs: **${mergedPRs.length}**`,
+              `- 👥 Active Contributors: **${contributors.size}**`,
               ``,
-              `### 🆕 New Issues This Week`,
-              newIssues.length > 0 ? newIssues.map(issue => `- [#${issue.number}](${issue.html_url}) ${issue.title} by @${issue.user.login}`).join('\n') : 'No new issues this week',
+              `### 🎯 Focus for Next Week`,
+              `- Review pending PRs`,
+              `- Resolve stale issues`,
+              `- Support new contributors`,
+              `- Improve documentation`,
               ``,
-              `### 🚀 New PRs This Week`,
-              newPRs.length > 0 ? newPRs.map(pr => `- [#${pr.number}](${pr.html_url}) ${pr.title} by @${pr.user.login}`).join('\n') : 'No new PRs this week',
-              ``,
-              `### ✅ Merged PRs This Week`,
-              mergedPRs.length > 0 ? mergedPRs.map(pr => `- [#${pr.number}](${pr.html_url}) ${pr.title} by @${pr.user.login}`).join('\n') : 'No merged PRs this week',
-              ``,
-              `### 🎯 Next Week's Goals`,
-              `- [ ] Review and merge pending PRs`,
-              `- [ ] Address stale issues and PRs`,
-              `- [ ] Welcome new contributors`,
-              `- [ ] Update project documentation`,
-              ``,
-              `---
-              *Automated weekly summary.*`
+              `---`,
+              `*Automated weekly summary generated by Smart Campus workflows*`
             ].join('\n');
 
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: summaryTitle,
-              body: summaryBody,
+              title: `📊 Weekly Summary – ${today.toDateString()}`,
+              body,
               labels: ['weekly-summary', 'automated']
             });
