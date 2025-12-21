@@ -1,0 +1,94 @@
+name: Auto Comment & Label Issues
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+
+jobs:
+  auto-comment-label:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Auto Comment on New Issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const { number: issueNumber, title: issueTitle, body: issueBody, user } = issue;
+            const author = user.login;
+
+            const truncatedBody = issueBody
+              ? (issueBody.length > 300 ? issueBody.substring(0, 300) + '...' : issueBody)
+              : '*No description provided*';
+
+            const comment = [
+              `## 🎉 Welcome to DevElevate!`,
+              ``,
+              `Hi @${author}, thanks for opening this issue! 🙌`,
+              ``,
+              `### 📋 Issue Details`,
+              `- **Issue #${issueNumber}**: ${issueTitle}`,
+              `- **Status**: 🆕 New Issue`,
+              ``,
+              `### 🔍 Issue Description`,
+              `\`\`\`\n${truncatedBody}\n\`\`\``,
+              ``,
+              `### 🚀 Next Steps`,
+              `1. Our team will review this issue within 24-48 hours.`,
+              `2. Feel free to add details or ask questions in comments.`,
+              `3. We'll update progress as we work on it.`,
+              ``,
+              `### 📚 Helpful Links`,
+              `- 📖 [Project Documentation](https://github.com/abhisek2004/Dev-Elevate#readme)`,
+              `- 🐛 [Bug Report Template](.github/ISSUE_TEMPLATE/bug_report.md)`,
+              `- ✨ [Feature Request Template](.github/ISSUE_TEMPLATE/feature_request.md)`,
+              `- 💬 [Discord Community](https://discord.gg/BtqrauPm)`,
+              `- 🌟 [GSSoC 2025](https://gssoc.girlscript.tech/)`,
+              ``,
+              `---`,
+              `*Automated message — join [Discord](https://discord.gg/BtqrauPm) for urgent help.*`
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              issue_number: issueNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+      - name: Auto Label Issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const { number: issueNumber, title, body } = issue;
+            const titleLower = title.toLowerCase();
+            const bodyLower = (body || '').toLowerCase();
+
+            let labels = ['new-issue'];
+
+            const keywordMap = {
+              'bug': ['bug', 'error', 'crash', 'fix'],
+              'enhancement': ['feature', 'enhancement', 'request', 'add'],
+              'documentation': ['doc', 'readme', 'documentation'],
+              'ui/ux': ['ui', 'ux', 'design', 'interface'],
+              'backend': ['backend', 'api', 'server', 'database'],
+              'frontend': ['frontend', 'react', 'client', 'component'],
+              'gssoc-2025': ['gssoc', 'gsoc']
+            };
+
+            for (const [label, keywords] of Object.entries(keywordMap)) {
+              if (keywords.some(k => titleLower.includes(k) || bodyLower.includes(k))) {
+                labels.push(label);
+              }
+            }
+
+            await github.rest.issues.addLabels({
+              issue_number: issueNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels
+            });
