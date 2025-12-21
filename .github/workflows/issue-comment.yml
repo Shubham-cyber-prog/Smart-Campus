@@ -1,3 +1,4 @@
+
 name: Auto Comment & Label Issues
 
 on:
@@ -25,7 +26,7 @@ jobs:
               : '*No description provided*';
 
             const comment = [
-              `## 🎉 Welcome to DevElevate!`,
+              `## 🎉 Welcome to Smart Campus!`,
               ``,
               `Hi @${author}, thanks for opening this issue! 🙌`,
               ``,
@@ -42,14 +43,14 @@ jobs:
               `3. We'll update progress as we work on it.`,
               ``,
               `### 📚 Helpful Links`,
-              `- 📖 [Project Documentation](https://github.com/abhisek2004/Dev-Elevate#readme)`,
+              `- 📖 [Project Documentation](https://github.com/Shubham-cyber-prog/Smart-Campus#readme)`,
               `- 🐛 [Bug Report Template](.github/ISSUE_TEMPLATE/bug_report.md)`,
               `- ✨ [Feature Request Template](.github/ISSUE_TEMPLATE/feature_request.md)`,
-              `- 💬 [Discord Community](https://discord.gg/BtqrauPm)`,
-              `- 🌟 [GSSoC 2025](https://gssoc.girlscript.tech/)`,
+              `- 💬 [Join our Discord](https://discord.gg/BtqrauPm)`,
+              `- 🌟 [GSSoC 2025 Program](https://gssoc.girlscript.tech/)`,
               ``,
               `---`,
-              `*Automated message — join [Discord](https://discord.gg/BtqrauPm) for urgent help.*`
+              `*This is an automated message — join [Discord](https://discord.gg/BtqrauPm) for urgent help.*`
             ].join('\n');
 
             await github.rest.issues.createComment({
