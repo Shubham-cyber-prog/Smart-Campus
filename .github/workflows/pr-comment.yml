@@ -31,17 +31,17 @@ jobs:
               : '*No description provided*';
 
             const welcomeMessage = [
-              `## 🚀 Welcome to DevElevate PR!`,
+              `## 🚀 Welcome to Smart Campus Contribution!`,
               ``,
-              `Hi @${author}, thank you for your pull request! 🙌`,
+              `Hi @${author}, thanks for your pull request! 🙌`,
               ``,
               `### 📋 PR Details`,
               `- **PR #${prNumber}**: ${prTitle}`,
               `- **Branch**: \`${branchName}\` → \`${baseBranch}\``,
               `- **Status**: 🆕 New Pull Request`,
               ``,
-              `### 🔍 PR Analysis`,
-              `**Description:**\n\`\`\`\n${truncatedBody}\n\`\`\``,
+              `### 🔍 PR Description`,
+              `\`\`\`\n${truncatedBody}\n\`\`\``,
               ``,
               `### ✅ Checklist for Review`,
               `- [ ] Code follows project style guidelines`,
@@ -52,22 +52,22 @@ jobs:
               `- [ ] All CI checks passing`,
               ``,
               `### 🚀 Next Steps`,
-              `1. **Review**: Maintainers will review your PR within 24–48 hours.`,
-              `2. **CI/CD**: Automated checks will run to ensure code quality.`,
-              `3. **Discussion**: Feel free to respond to review comments.`,
-              `4. **Merge**: Once approved, your PR will be merged.`,
+              `1. Maintainers will review this PR within 24–48 hours.`,
+              `2. Automated CI/CD checks will run to ensure code quality.`,
+              `3. Respond to review comments if needed.`,
+              `4. Once approved, the PR will be merged.`,
               ``,
               `### 📚 Helpful Resources`,
-              `- 📖 [Contributing Guidelines](https://github.com/abhisek2004/Dev-Elevate/blob/main/README.md)`,
-              `- 🔧 [PR Template](https://github.com/abhisek2004/Dev-Elevate/blob/main/.github/ISSUE_TEMPLATE/PULL_REQUEST_TEMPLATE.md)`,
+              `- 📖 [Contributing Guidelines](https://github.com/Shubham-cyber-prog/Smart-Campus/blob/main/README.md)`,
+              `- 🔧 [PR Template](https://github.com/Shubham-cyber-prog/Smart-Campus/blob/main/.github/ISSUE_TEMPLATE/PULL_REQUEST_TEMPLATE.md)`,
               `- 💬 [Join our Discord](https://discord.gg/BtqrauPm) for discussions`,
-              `- 🌟 [GSSoC 2025 Program](https://gssoc.girlscript.tech/) - We're an official participant!`,
+              `- 🌟 [GSSoC 2025](https://gssoc.girlscript.tech/) - Smart Campus is an official participant!`,
               ``,
               `### 🏷️ Auto-Labeling`,
               `This PR will be automatically labeled based on its content and files changed.`,
               ``,
               `---`,
-              `*This is an automated message. For urgent help, [join our Discord](https://discord.gg/BtqrauPm).*`
+              `*Automated message — for urgent assistance, join [Discord](https://discord.gg/BtqrauPm).*`
             ].join('\n');
 
             await github.rest.issues.createComment({
@@ -138,7 +138,7 @@ jobs:
               issue_number: prNumber,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              labels: labels
+              labels
             });
 
       - name: Label PR by Size
@@ -151,17 +151,11 @@ jobs:
             const totalChanges = additions + deletions;
 
             let sizeLabel = '';
-            if (totalChanges <= 10) {
-              sizeLabel = 'size/XS';
-            } else if (totalChanges <= 30) {
-              sizeLabel = 'size/S';
-            } else if (totalChanges <= 100) {
-              sizeLabel = 'size/M';
-            } else if (totalChanges <= 500) {
-              sizeLabel = 'size/L';
-            } else {
-              sizeLabel = 'size/XL';
-            }
+            if (totalChanges <= 10) sizeLabel = 'size/XS';
+            else if (totalChanges <= 30) sizeLabel = 'size/S';
+            else if (totalChanges <= 100) sizeLabel = 'size/M';
+            else if (totalChanges <= 500) sizeLabel = 'size/L';
+            else sizeLabel = 'size/XL';
 
             await github.rest.issues.addLabels({
               issue_number: pr.number,
