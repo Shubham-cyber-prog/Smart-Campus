@@ -47,12 +47,12 @@ jobs:
             const prNumber = parseInt('${{ steps.check-first-time.outputs.pr-number }}');
 
             const welcomeMessage = [
-              `## 🎉 Welcome to DevElevate, @${author}!`,
+              `## 🎉 Welcome to Smart Campus Hub, @${author}!`,
               ``,
               `### 🌟 First-Time Contributor Badge`,
               `![First Time Contributor](https://img.shields.io/badge/First%20Time%20Contributor-DevElevate-brightgreen?style=for-the-badge&logo=github)`,
               ``,
-              `🎊 **Congratulations!** You've just made your first contribution to DevElevate!`,
+              `🎊 **Congratulations!** You've just made your first contribution to Smart Campus Platform !`,
               ``,
               `### 🎯 What This Means`,
               `- You're part of our open-source community`,
@@ -74,10 +74,10 @@ jobs:
               `### 🏆 Recognition`,
               `- Added to contributors list`,
               `- Mentioned in release notes`,
-              `- Eligible for GSSoC 2025`,
+              `- Eligible for Woc 2025`,
               ``,
               `---
-              *Welcome to the DevElevate family! 🌟*`
+              *Welcome to the WOC family! 🌟*`
             ].join('\n');
 
             await github.rest.issues.createComment({
